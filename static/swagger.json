@@ -1,0 +1,264 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Comp2001 Trail API",
+    "version": "1.0.0",
+    "description": "An API for Trails data"
+  },
+  "host": "127.0.0.1:8000",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Operations for the users"
+    },
+    {
+      "name": "Trails",
+      "description": "Operations for the trails"
+    },
+    {
+      "name": "User Favorites and Sessions",
+      "description": "Operations for user favorites and sessions"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Get all users",
+        "tags": [ "Users" ],
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "user_id": { "type": "integer" },
+                  "username": { "type": "string" },
+                  "email": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a user",
+        "tags": [ "Users" ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": { "type": "string" },
+                "email": { "type": "string" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "User created successfully" }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "tags": [ "Users" ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "404": { "description": "User not found" }
+        }
+      },
+      "put": {
+        "summary": "Update a user",
+        "tags": [ "Users" ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "user",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": { "type": "string" },
+                "email": { "type": "string" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "404": { "description": "User not found" }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user",
+        "tags": [ "Users" ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "404": { "description": "User not found" }
+        }
+      }
+    },
+    "/trails": {
+      "get": {
+        "summary": "View trails",
+        "tags": [ "Trails" ],
+        "responses": {}
+      },
+      "post": {
+        "summary": "Insert trail",
+        "tags": [ "Trails" ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "trail",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "trail_name": { "type": "string" },
+                "trail_location": { "type": "string" },
+                "latitude": {
+                  "type": "number",
+                  "default": 0.0
+                },
+                "longitude": {
+                  "type": "number",
+                  "default": 0.0
+                },
+                "distance": { "type": "number" },
+                "time_hours": {
+                  "type": "number",
+                  "default": 1.0
+                },
+                "difficulty": {
+                  "type": "string",
+                  "default": "Unknown"
+                },
+                "route_type": {
+                  "type": "string",
+                  "default": "Unknown"
+                },
+                "description": {
+                  "type": "string",
+                  "default": "No description"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/trails/{trail_id}": {
+      "get": {
+        "summary": "Search for a trail by ID",
+        "tags": [ "Trails" ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trail_id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "404": { "description": "Trail not found" }
+        }
+      },
+      "put": {
+        "summary": "Update trail",
+        "tags": [ "Trails" ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trail_id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "trail",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "trail_name": { "type": "string" },
+                "trail_location": { "type": "string" },
+                "distance": { "type": "number" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "404": { "description": "Trail not found" }
+        }
+      },
+      "delete": {
+        "summary": "Delete trail",
+        "tags": [ "Trails" ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trail_id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "404": { "description": "Trail not found" }
+        }
+      }
+    },
+    "/sessions/{user_id}": {
+      "get": {
+        "summary": "Get all sessions for a user",
+        "tags": [ "User Favorites and Sessions" ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/favorites/{user_id}": {
+      "get": {
+        "summary": "Get all favorited trails for a user",
+        "tags": [ "User Favorites and Sessions" ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}
